@@ -69,7 +69,19 @@
 @media (min-width:1440px) {
   .BookingDesc {
   flex-direction: row;
-  }
-
-  
+  } 
 }
+
+.Modal{
+  /* height: 70vh; */
+  overflow: hidden;
+}
+
+.Form {
+  padding: 1.25rem;
+  height: 40vh;
+  overflow: auto;
+  overflow: -moz-scrollbars-none;
+  -ms-overflow-style: none; 
+}
+.Form::-webkit-scrollbar { width: 0 !important }

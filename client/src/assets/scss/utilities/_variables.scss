@@ -322,7 +322,7 @@ $stone: (
 // fusv-enable
 
 // scss-docs-start theme-color-variables
-$primary:       rgb(53, 133, 139) !default;
+$primary:       $indigo !default;
 $secondary:     $gray-600 !default;
 $tertiary:      $stone !default;
 $success:       $green !default;

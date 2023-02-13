@@ -1,42 +1,29 @@
 import React, { useState, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { useQuery } from "react-query";
 import { Image, Button } from "react-bootstrap";
-
 import { IoBed } from "react-icons/io5";
 import { GiBathtub } from "react-icons/gi";
-
-import { useQuery } from "react-query";
+import { AppContext } from "context/AppContext";
 import { API } from "lib/api";
+
+import Toast from "lib/sweetAlerts";
 import css from "./Detail.module.css";
 
 import Layout from "layouts/withoutSearchbar";
 import OrderModal from "components/Modals/Detail";
-import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
-import ModalLogin from "components/Modals/Login"
-import { AppContext } from "context/AppContext";
+import LoginModal from "components/Modals/Login";
+import RegisterModal from "components/Modals/Register";
 // import { AppContext } from "context/AppContext";
 
 export default function Detail(props) {
 	const [showModal, setShowModal] = useState(false);
-	const [showLogin, setShowLogin] = useState(false);
-	const [modalRegist, setModalRegist] = useState(false);
+	const [loginModal, setLoginModal] = useState(false);
+	const [registerModal, setRegisterModal] = useState(false);
+
 	const { id } = useParams();
 	const redirect = useNavigate();
 	const [state, dispatch] = useContext(AppContext);
-
-	// const [state, dispatch] = useContext(AppContext);
-	const Toast = Swal.mixin({
-		toast: true,
-		position: "top-end",
-		showConfirmButton: false,
-		timer: 5000,
-		timerProgressBar: true,
-		didOpen: (toast) => {
-			toast.addEventListener("mouseenter", Swal.stopTimer);
-			toast.addEventListener("mouseleave", Swal.resumeTimer);
-		},
-	});
 
 	let { data: property } = useQuery("detailPropertyCache", async () => {
 		const response = await API.get("/property/" + id);
@@ -49,31 +36,26 @@ export default function Detail(props) {
 	});
 
 	const handleBooking = () => {
-
-		if (!myBooking){
-			setShowModal(true)
+		if (!myBooking) {
+			setShowModal(true);
 		} else {
 			Toast.fire({
 				icon: "error",
-				title: "You have an unpaid order, please pay in advance before placing another order!",
+				title:
+					"You have an unpaid order, please pay in advance before placing another order!",
 			});
 			redirect("/mybooking");
 		}
-	}
+	};
 
-	
-
-	console.log("data showed", property); 
+	console.log("data showed", property);
 
 	return (
 		<Layout className={"bg-white"}>
 			<div className={css.MaxWidth} style={{ marginTop: "4rem" }}>
 				<div className='d-flex flex-column gap-3 w-100'>
 					<div className={css.WrapperPrimaryImage}>
-						<Image
-							src={"http://localhost:5000/uploads/" + property?.image}
-							className={css.PrimaryImage}
-						/>
+						<Image src={property?.image} className={css.PrimaryImage} />
 					</div>
 					<div className='d-flex gap-3'>
 						<div className={css.WrapperSubImage}>
@@ -135,8 +117,7 @@ export default function Detail(props) {
 						<p className='text-secondary'>{property?.description}</p>
 					</div>
 					<div className='d-flex w-100 justify-content-end'>
-						{state.isLogin === true? (
-							
+						{state.isLogin === true ? (
 							<Button
 								size='lg'
 								variant='primary'
@@ -147,10 +128,13 @@ export default function Detail(props) {
 								BOOK NOW
 							</Button>
 						) : (
-							<Button className="px-5 py-3 fs-5 fw-bold" onClick={() => setShowLogin(true)}>BOOK NOW</Button>
-						)
-						}
-						
+							<Button
+								className='px-5 py-3 fs-5 fw-bold'
+								onClick={() => setLoginModal(true)}
+							>
+								BOOK NOW
+							</Button>
+						)}
 					</div>
 					{/* <Link to='/'>back to home</Link> */}
 				</div>
@@ -161,10 +145,15 @@ export default function Detail(props) {
 					// gotoregister={gotoRegistration}
 					onHide={() => setShowModal(false)}
 				/>
-				<ModalLogin
-					show={showLogin}
-					onHide={() => setShowLogin(false)}
-					gotoregister={() => setModalRegist(true)}
+				<LoginModal
+					show={loginModal}
+					toRegister={() => setRegisterModal(true)}
+					onHide={() => setLoginModal(false)}
+				/>
+				<RegisterModal
+					show={registerModal}
+					toLogin={() => setLoginModal(true)}
+					onHide={() => setRegisterModal(false)}
 				/>
 			</div>
 		</Layout>
