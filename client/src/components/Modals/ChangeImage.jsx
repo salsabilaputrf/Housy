@@ -14,7 +14,7 @@ export default function ImageModal(props) {
 
   const {image} = form;
 
-  let { data: modalsUser } = useQuery("modalspasswordcache", async () => {
+  let { data: modalsUser } = useQuery("modalschangeimagecache", async () => {
     const response = await API.get("/user/" + state.user.id)
     return response.data.data
   }) 
@@ -42,13 +42,20 @@ export default function ImageModal(props) {
       const response = await API.patch("/user/changeImage/" + state.user.id, formData)
 
       if (response != null) {
-        alert("Change Image Success")
+        Toast.fire({
+					icon: "success",
+					title: "Successfully Change Photo Profile",
+				});
         props.onHide();
       }
 
       props.onHide();
     } catch (error) {
       console.log(error)
+      Toast.fire({
+        icon: "error",
+        title: "Failed to Change Photo Profile!!!",
+      });
     }
   })
   return (
