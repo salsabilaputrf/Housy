@@ -4,6 +4,7 @@ import React, { useContext, useState } from "react";
 import { Button, Modal, Form, Image } from "react-bootstrap";
 import { useMutation, useQuery } from "react-query";
 import { useParams } from "react-router-dom";
+import Toast from "lib/sweetAlerts";
 
 export default function ImageModal(props) {
     const [state, dispatch] = useContext(AppContext);
