@@ -75,6 +75,13 @@
 	border-radius: 0.5rem;
 	padding: 0.3rem 1.25rem;
 }
+
+.BadgeError {
+	background-color: #e6c2ca;
+	color: #ff0742;
+	border-radius: 0.5rem;
+	padding: 0.3rem 1.25rem;
+}
 .TextSuccess {
 	color: #23e941;
 }
