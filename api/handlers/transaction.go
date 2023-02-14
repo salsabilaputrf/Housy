@@ -263,12 +263,14 @@ func (h *handleTransaction) Notification(w http.ResponseWriter, r *http.Request)
 	} else if transactionStatus == "deny" {
 		// TODO you can ignore 'deny', because most of the time it allows payment retries
 		// and later can become success
-		SendMail("failed", transaction) 
+		
 		h.TransactionRepository.UpdateTransaction("failed",  orderId)
+		SendMail("failed", transaction) 
 	} else if transactionStatus == "cancel" || transactionStatus == "expire" {
 		// TODO set transaction status on your databaase to 'failure'
-		SendMail("failed", transaction)
+		
 		h.TransactionRepository.UpdateTransaction("failed",  orderId)
+		SendMail("failed", transaction)
 	} else if transactionStatus == "pending" {
 		// TODO set transaction status on your databaase to 'pending' / waiting payment
 		h.TransactionRepository.UpdateTransaction("pending",  orderId)
