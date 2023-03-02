@@ -60,20 +60,20 @@ export default function Detail(props) {
 					<div className='d-flex gap-3'>
 						<div className={css.WrapperSubImage}>
 							<Image
-								src={process.env.PUBLIC_URL + "/img/rooms/image3.png"}
+								src={property?.image}
 								className={css.PrimaryImage}
 							/>
 						</div>
 						<div className={css.WrapperSubImage}>
 							<Image
-								src={process.env.PUBLIC_URL + "/img/rooms/image7.png"}
+								src={property?.image}
 								className={css.PrimaryImage}
 							/>
 						</div>
 						<div className={css.WrapperSubImage}>
 							<span className={css.ImageMore}>+5</span>
 							<Image
-								src={process.env.PUBLIC_URL + "/img/rooms/image6.png"}
+								src={property?.image}
 								className={css.PrimaryImage}
 							/>
 						</div>
